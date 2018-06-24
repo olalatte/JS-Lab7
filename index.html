@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Meetings in LA</title>
+	<script type='text/javascript' src='node_modules/jquery/dist/jquery.min.js'></script>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Meetings in Los Angeles</h1>
+<script>
+	$.ajax({
+		url: 'https://api.meetup.com/find/upcoming_events?key=346937a3e532d585720c326427463&zip=90003&end_date_range=2019-05-15T00:00:00&text=web%design$radius=100',
+		method: 'GET',
+		dataType: 'JSONP',
+		success: function (array) {
+		data = array.data.events;
+		for (i = 0; i < data.length; i++) {
+			$('.container').append(
+				'<h2>' + '&#10048;  ' + data[i].name + ' &#10048; ' +'</h2>' +
+				'<p>Status: ' + data[i].status + '</p>' +
+				'<p>Time: ' + data[i].local_date +' '+ data[i].local_time + '</p>' +
+				'<p>Place: ' + (data[i].venue == undefined ? 'No information was provided' : data[i].venue.address_1) + '</p>' +
+				'<div class="gradient">Description: ' + data[i].description + '</div>' +
+				'<p>&#9742; How to find us? ' + (data[i].how_to_find_us == undefined ? 'No information was provided by author &#9785;' : data[i].how_to_find_us)+ '</p><br><br>' 
+
+				);
+		}
+	} 
+}
+)
+</script>
+<div class="container">
+</div>
+</body>
+</html>
